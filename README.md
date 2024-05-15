@@ -49,11 +49,11 @@ If publishing files fails, please create corresponding files at the path `config
 #### Step 5. Update the various config settings in the published config file:
 
 - After publishing the package assets a configuration file will be located at <code>config/netdata.php</code>.
-- Please read the document of Netdata document to get those values to fill into the config file if you are using manual installation and not on any server panel.
+- Please read the document of Netdata document to get those values to fill into the config file if you are using manual installation and not on any server panel. 
 - If you are using a panel like Direct Admin then you could read about the document of Direct Admin to find out. In our case, it was:
 
 ```dotenv
-NETDATA_SERVER="https://directadmin.domain.ltd/CMD_NETDATA_SOCK"
+NETDATA_SERVER="http://directadmin.domain.ltd:2222/CMD_NETDATA_SOCK"
 NETDATA_SCOPE_NODE="52f2daca-33fa-421d-ad90-ce9955f760fa"
 NETDATA_USERNAME="username"
 NETDATA_PASSWORD="password"
