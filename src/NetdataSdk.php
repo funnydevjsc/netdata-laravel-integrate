@@ -29,7 +29,19 @@ class NetdataSdk
 
     private function get(string $url): array
     {
-        $httpClient = Http::withOptions(['verify' => false])->timeout(10);
+        $httpClient = Http::withHeaders([
+            'Priority' => 'u=1, i',
+            'Referer' => $this->server.'/v2/spaces/server/rooms/local/overview',
+            'Sec-Ch-Ua' => '"Google Chrome";v="125", "Chromium";v="125", "Not.A/Brand";v="24"',
+            'Sec-Ch-Ua-Mobile' => '?0',
+            'Sec-Ch-Ua-Platform' => '"macOS"',
+            'Sec-Fetch-Dest' => 'empty',
+            'Sec-Fetch-Mode' => 'cors',
+            'Sec-Fetch-Site' => 'same-origin',
+            'User-Agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36'
+        ])
+            ->withOptions(['verify' => false])
+            ->timeout(10);
 
         if (!empty($this->username) && !empty($this->password)) {
             $httpClient = $httpClient->withBasicAuth($this->username, $this->password);
@@ -66,15 +78,15 @@ class NetdataSdk
         $cpu_usage = [
             'time' => [],
             '10' => [
-                'avg' => round($response['summary']['dimensions'][0]['sts']['avg'], 2),
+                'avg' => isset($response['summary']['dimensions'][0]['sts']['avg']) ? round($response['summary']['dimensions'][0]['sts']['avg'], 2) : 0,
                 'data' => []
             ],
             '1m' => [
-                'avg' => round($response['summary']['dimensions'][1]['sts']['avg'], 2),
+                'avg' => isset($response['summary']['dimensions'][1]['sts']['avg']) ? round($response['summary']['dimensions'][1]['sts']['avg'], 2) : 0,
                 'data' => []
             ],
             '5m' => [
-                'avg' => round($response['summary']['dimensions'][2]['sts']['avg'], 2),
+                'avg' => isset($response['summary']['dimensions'][2]['sts']['avg']) ? round($response['summary']['dimensions'][2]['sts']['avg'], 2) : 0,
                 'data' => []
             ]
         ];
